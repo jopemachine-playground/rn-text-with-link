@@ -13,6 +13,10 @@ Enter text. urls could be represented by like this way. `[label](url)`
 Example:
 
 ```
+import TextWithLink from 'rn-text-with-link';
+
+...
+
 <TextWithLink
    text={
    'You acknowledge that you have read the [Privacy Policy](https://some_privacy_policy.com)'
