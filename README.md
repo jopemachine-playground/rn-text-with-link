@@ -15,8 +15,9 @@ Example:
 ```
 <TextWithLink
    text={
-   'By tapping ”Sign Up & Accept”, you\n acknowledge that you have read the [Privacy Policy](https://some_privacy_policy.com) and agree to [Terms of service](https://www.tos.com)'
- }
+   'You acknowledge that you have read the [Privacy Policy](https://some_privacy_policy.com)'
+   }
+/>
 ```
 
 
