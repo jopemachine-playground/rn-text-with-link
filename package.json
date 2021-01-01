@@ -1,0 +1,42 @@
+{
+  "name": "rn-text-with-link",
+  "version": "0.0.1",
+  "description": "Create simple text component with hyperlink in React Native",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc index.tsx --target es6",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jopemachine/rn-text-with-link.git"
+  },
+  "author": "jopemachine",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jopemachine/rn-text-with-link/issues"
+  },
+  "homepage": "https://github.com/jopemachine/rn-text-with-link#readme",
+  "devDependencies": {
+    "@types/react": "^17.0.0",
+    "@types/react-native": "^0.63.43",
+    "typescript": "^4.1.3"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "dependencies": {},
+  "keywords": [
+    "react-native",
+    "react native",
+    "text",
+    "hyperlink",
+    "link"
+  ],
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "README.md"
+  ]
+}
