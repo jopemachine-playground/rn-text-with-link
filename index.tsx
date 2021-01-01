@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Text, Linking, StyleProp, TextStyle } from "react-native";
 
+interface Wrapper<T> {
+  content: T
+}
+
 function openBrowser(link: string) {
   Linking.canOpenURL(link).then((supported: boolean) => {
     if (supported) {
@@ -22,13 +26,13 @@ function TextWithLink({
   callback?: (url: string) => void;
   linkStyle?: StyleProp<TextStyle>;
 }): JSX.Element {
-  const [textComponent, setTextComponent] = useState(<></>);
+  const [textComponent, setTextComponent] = useState<JSX.Element>(<></>);
 
-  function ensureFlag(flags: any[], flag: any) {
+  function ensureFlag(flags: string, flag: string) {
     return flags.includes(flag) ? flags : flags + flag;
   }
 
-  function* matchAll(str: string, regex: any) {
+  function* matchAll(str: string, regex: RegExp) {
     const localCopy = new RegExp(regex, ensureFlag(regex.flags, "g"));
     let match = localCopy.exec(str);
     while (match) {
@@ -39,32 +43,34 @@ function TextWithLink({
 
   useEffect(() => {
     // ** handle [label](url)
-    const hasURL = /\[([ \n&%.?a-zA-Z0-9:+-_\\/]*)\]\(([&%.?a-zA-Z0-9:+-_\\/]*)\)/g;
-    const results = matchAll(text, hasURL);
+    const hasURL: RegExp = /\[([ \n&%.?a-zA-Z0-9:+-_\\/]*)\]\(([&%.?a-zA-Z0-9:+-_\\/]*)\)/g;
+    const results: Generator<RegExpExecArray, void, unknown> = matchAll(
+      text,
+      hasURL
+    );
 
     let indexPointer: number = 0;
 
-    let textComp = <></>;
+    let textCompWrapper: Wrapper<JSX.Element> = { content: <></> };
 
     for (let result of results) {
-      const captured = result[0];
-      const label = result[1];
-      const url = result[2];
-      const startindex = result.index;
-      const endIndex = result.index + captured.length;
+      const captured: string = result[0];
+      const label: string = result[1];
+      const url: string = result[2];
+      const sIndex: number = result.index;
+      const eIndex: number = result.index + captured.length;
 
-      const beforeTxt = text.substr(indexPointer, startindex - indexPointer);
-      indexPointer = endIndex;
+      const beforeTxt: string = text.substr(indexPointer, sIndex - indexPointer);
+      indexPointer = eIndex;
 
-      textComp = appendNormalText(beforeTxt, textComp);
-      textComp = appendHyperlink(label, url, textComp);
+      appendNormalText(textCompWrapper, beforeTxt);
+      appendHyperlink(textCompWrapper, label, url);
     }
 
-    const remainingTxt = text.substr(indexPointer, text.length);
+    const remainingTxt: string = text.substr(indexPointer, text.length);
 
-    textComp = appendNormalText(remainingTxt, textComp);
-
-    setTextComponent(textComp);
+    appendNormalText(textCompWrapper, remainingTxt);
+    setTextComponent(textCompWrapper.content);
   }, []);
 
   const onPressHandler = (url: string) => {
@@ -75,24 +81,24 @@ function TextWithLink({
     }
   };
 
-  const appendNormalText = (label: string, preText: JSX.Element) => {
-    return (
+  const appendNormalText = (textComp: Wrapper<JSX.Element>, textToAppend: string): void => {
+    textComp.content = (
       <Text style={style} selectable>
-        {preText}
-        {label}
+        {textComp.content}
+        {textToAppend}
       </Text>
     );
   };
 
   const appendHyperlink = (
-    label: string,
+    textComp: Wrapper<JSX.Element>,
+    textToAppend: string,
     url: string,
-    preText: JSX.Element
-  ): JSX.Element => {
-    return (
+  ): void => {
+    textComp.content = (
       <Text style={linkStyle} selectable onPress={() => onPressHandler(url)}>
-        {preText}
-        {label}
+        {textComp.content}
+        {textToAppend}
       </Text>
     );
   };
