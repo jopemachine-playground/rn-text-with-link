@@ -8,7 +8,7 @@ Create simple text component with hyperlink in React Native
 
 #### text: `string`
 
->Enter text. urls could be represented by like this way. `[label](url)`
+Enter text. urls could be represented by like this way. `[label](url)`
 
 Example:
 
@@ -23,16 +23,16 @@ Example:
 
 #### style?: `StyleProp<TextStyle>`
 
-> Style of normal text which not contains hyperlink
+Style of normal text which not contains hyperlink
 
 
 
 #### callback?: `(url: string) => void`
 
-> Callback function of onPressEvent of hyperlink.
+Callback function of onPressEvent of hyperlink.
 
 
 
 #### linkStyle?: `StyleProp<TextStyle>`
 
-> The style of hyperlink text.
+The style of hyperlink text.
