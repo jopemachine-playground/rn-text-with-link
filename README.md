@@ -1,8 +1,8 @@
-# rn-text-with-link
+# rn-text-with-link 
+<img src="https://img.shields.io/github/license/jopemachine/rn-text-with-link.svg" alt="License">
 
 Create simple text component with hyperlink in React Native
 
-<img src="https://img.shields.io/github/license/jopemachine/rn-text-with-link.svg" alt="License">
 
 ## API
 
