@@ -12,7 +12,7 @@ Enter text. urls could be represented by like this way. `[label](url)`
 
 Example:
 
-```
+```js
 import TextWithLink from 'rn-text-with-link';
 
 ...
