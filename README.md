@@ -48,7 +48,7 @@ Style of normal text which not contains hyperlink
 
 The style of hyperlink text.
 
-#### callback?: `(url: string) => void | Object`
+#### callback?: `(url: string) => void | CallbackTable`
 
 1) `Function` type : Callback function of onPressEvent of hyperlink.
 
@@ -73,7 +73,7 @@ const gotoSignUpScreen = () => {
 ```
 
 
-2) `Object` type
+2) `CallbackTable` type (Object type)
 
 It could be useful when you want to bind a different callback function to a particular "link".
 

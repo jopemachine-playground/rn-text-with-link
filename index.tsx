@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Text, Linking, StyleProp, TextStyle } from "react-native";
-
-interface Wrapper<T> {
-  content: T;
-}
+import { CallbackTable, Wrapper } from './index.d';
 
 function openBrowser(link: string) {
   Linking.canOpenURL(link).then((supported: boolean) => {
@@ -23,7 +20,7 @@ function TextWithLink({
 }: {
   text: string;
   style?: StyleProp<TextStyle>;
-  callback?: (url: string) => void | Object;
+  callback?: ((url: string) => void) | CallbackTable;
   linkStyle?: StyleProp<TextStyle>;
 }): JSX.Element {
   const [textComponent, setTextComponent] = useState<JSX.Element>(<></>);
@@ -79,7 +76,7 @@ function TextWithLink({
   const onPressHandler = (
     label: string,
     url: string,
-    callback?: (url: string) => void | Object
+    callback?: ((url: string) => void) | CallbackTable
   ) => {
     if (callback && typeof callback === "function") {
       callback(url);
@@ -106,7 +103,7 @@ function TextWithLink({
     textComp: Wrapper<JSX.Element>,
     textToAppend: string,
     url: string,
-    callback?: (url: string) => void | Object
+    callback?: ((url: string) => void) | CallbackTable
   ): void => {
     textComp.content = (
       <Text
