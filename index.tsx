@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Text, Linking, StyleProp, TextStyle } from "react-native";
 
 interface Wrapper<T> {
-  content: T
+  content: T;
 }
 
 function openBrowser(link: string) {
@@ -20,13 +20,11 @@ function TextWithLink({
   style,
   linkStyle = { color: "blue" },
   callback,
-  customCallbackTable,
 }: {
   text: string;
   style?: StyleProp<TextStyle>;
-  callback?: (url: string) => void;
+  callback?: (url: string) => void | Object;
   linkStyle?: StyleProp<TextStyle>;
-  customCallbackTable?: Object;
 }): JSX.Element {
   const [textComponent, setTextComponent] = useState<JSX.Element>(<></>);
 
@@ -62,16 +60,14 @@ function TextWithLink({
       const sIndex: number = result.index;
       const eIndex: number = result.index + captured.length;
 
-      const beforeTxt: string = text.substr(indexPointer, sIndex - indexPointer);
+      const beforeTxt: string = text.substr(
+        indexPointer,
+        sIndex - indexPointer
+      );
       indexPointer = eIndex;
 
       appendNormalText(textCompWrapper, beforeTxt);
-
-      if (customCallbackTable && url === '!') {
-        appendHyperlink(textCompWrapper, label, url, customCallbackTable[label]);
-      } else {
-        appendHyperlink(textCompWrapper, label, url);
-      }
+      appendHyperlink(textCompWrapper, label, url, callback);
     }
 
     const remainingTxt: string = text.substr(indexPointer, text.length);
@@ -80,15 +76,24 @@ function TextWithLink({
     setTextComponent(textCompWrapper.content);
   }, []);
 
-  const onPressHandler = (url: string) => {
-    if (callback) {
+  const onPressHandler = (
+    label: string,
+    url: string,
+    callback?: (url: string) => void | Object
+  ) => {
+    if (callback && typeof callback === "function") {
       callback(url);
+    } else if (callback && typeof callback === "object" && callback[label]) {
+      (callback as Object)[label]();
     } else {
       openBrowser(url);
     }
   };
 
-  const appendNormalText = (textComp: Wrapper<JSX.Element>, textToAppend: string): void => {
+  const appendNormalText = (
+    textComp: Wrapper<JSX.Element>,
+    textToAppend: string
+  ): void => {
     textComp.content = (
       <Text style={style} selectable>
         {textComp.content}
@@ -101,12 +106,14 @@ function TextWithLink({
     textComp: Wrapper<JSX.Element>,
     textToAppend: string,
     url: string,
-    customCb?: () => void
+    callback?: (url: string) => void | Object
   ): void => {
-    const cb = customCb ? () => customCb() : () => onPressHandler(url);
-
     textComp.content = (
-      <Text style={linkStyle} selectable onPress={cb}>
+      <Text
+        style={linkStyle}
+        selectable
+        onPress={() => onPressHandler(textToAppend, url, callback)}
+      >
         {textComp.content}
         {textToAppend}
       </Text>

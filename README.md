@@ -48,15 +48,36 @@ Style of normal text which not contains hyperlink
 
 The style of hyperlink text.
 
-#### callback?: `(url: string) => void`
+#### callback?: `(url: string) => void | Object`
 
-Callback function of onPressEvent of hyperlink.
+1) `Function` type : Callback function of onPressEvent of hyperlink.
 
-#### customCallbackTable?: `Object`
+You can simply put `!` in the url's place if you don't need to use url in your custom callback.
+
+```js
+import TextWithLink from 'rn-text-with-link';
+
+...
+
+const gotoSignUpScreen = () => {
+  ...
+};
+
+...
+
+<TextWithLink
+  text={"Don't have an account? [Sign up](!)"}
+  callback={gotoSignUpScreen}
+/>
+
+```
+
+
+2) `Object` type
 
 It could be useful when you want to bind a different callback function to a particular "link".
 
-Write `!` in the url's place and specify the function to use for the custom callback table.
+You can simply put `!` in the url's place if you don't need to use url in your custom callback.
 
 Example:
 
@@ -65,18 +86,22 @@ import TextWithLink from 'rn-text-with-link';
 
 ...
 
+const handleSignIn = () => {
+  ...
+};
+
 const gotoSignUpScreen = () => {
-  props.navigation.navigate('SignUp');
+  ...
 };
 
 ...
 
 <TextWithLink
-  text={"Don't have an account? [Sign up](!)"}
-  customCallbackTable={{
+  text={"[Sign in](!) \nDon't have an account? [Sign up](!)"}
+  callback={{
+    'Sign in': handleSignIn,
     'Sign up': gotoSignUpScreen,
   }}
-/>
 />
 
 ```

@@ -5,11 +5,9 @@ export default function TextWithLink({
   style,
   callback,
   linkStyle,
-  customCallbackTable,
 }: {
   text: string;
   style?: StyleProp<TextStyle>;
-  callback?: (url: string) => void;
+  callback?: (url: string) => void | Object;
   linkStyle?: StyleProp<TextStyle>;
-  customCallbackTable?: Object;
 }): JSX.Element;
