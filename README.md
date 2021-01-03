@@ -1,8 +1,13 @@
-# rn-text-with-link 
+# rn-text-with-link
 <img src="https://img.shields.io/github/license/jopemachine/rn-text-with-link.svg" alt="License">
 
 Create simple text component with hyperlink in React Native
 
+<img src="./demo.gif">
+
+## Example
+
+Check [App.js]() in the Example folder.
 
 ## API
 
@@ -21,9 +26,11 @@ import TextWithLink from 'rn-text-with-link';
 
 <TextWithLink
    text={
-   'You acknowledge that you have read the [Privacy Policy](https://some_privacy_policy.com)'
+      'You acknowledge that you have read the [Privacy Policy](https://some_privacy_policy.com)'
    }
 />
+
+
 ```
 
 
