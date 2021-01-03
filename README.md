@@ -44,13 +44,13 @@ import TextWithLink from 'rn-text-with-link';
 
 Style of normal text which not contains hyperlink
 
-#### callback?: `(url: string) => void`
-
-Callback function of onPressEvent of hyperlink.
-
 #### linkStyle?: `StyleProp<TextStyle>`
 
 The style of hyperlink text.
+
+#### callback?: `(url: string) => void`
+
+Callback function of onPressEvent of hyperlink.
 
 #### customCallbackTable?: `Object`
 
