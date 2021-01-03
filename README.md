@@ -54,7 +54,7 @@ The style of hyperlink text.
 
 #### customCallbackTable?: `Object`
 
-It could be useful when you want to bind a different callback function to a particular url.
+It could be useful when you want to bind a different callback function to a particular "link".
 
 Write `!` in the url's place and specify the function to use for the custom callback table.
 
