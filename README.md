@@ -3,11 +3,11 @@
 
 Create simple text component with hyperlink in React Native
 
-<img src="./demo.gif">
+<img src="./demo.gif" width="30%" height="30%">
 
 ## Example
 
-Check [App.js]() in the Example folder.
+Check [App.js](https://github.com/jopemachine/rn-text-with-link/blob/main/Example/App.js) in the Example folder.
 
 ## API
 
