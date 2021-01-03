@@ -20,11 +20,13 @@ function TextWithLink({
   style,
   linkStyle = { color: "blue" },
   callback,
+  customCallbackTable,
 }: {
   text: string;
   style?: StyleProp<TextStyle>;
   callback?: (url: string) => void;
   linkStyle?: StyleProp<TextStyle>;
+  customCallbackTable?: Object;
 }): JSX.Element {
   const [textComponent, setTextComponent] = useState<JSX.Element>(<></>);
 
@@ -43,7 +45,7 @@ function TextWithLink({
 
   useEffect(() => {
     // ** handle [label](url)
-    const hasURL: RegExp = /\[([ \n&%.?a-zA-Z0-9:+-_\\/]*)\]\(([&%.?a-zA-Z0-9:+-_\\/]*)\)/g;
+    const hasURL: RegExp = /\[([ \n&%.?a-zA-Z0-9:+-_\\/]*)\]\(([&%.?a-zA-Z0-9:+-_\\/]*|!)\)/g;
     const results: Generator<RegExpExecArray, void, unknown> = matchAll(
       text,
       hasURL
@@ -64,7 +66,12 @@ function TextWithLink({
       indexPointer = eIndex;
 
       appendNormalText(textCompWrapper, beforeTxt);
-      appendHyperlink(textCompWrapper, label, url);
+
+      if (customCallbackTable && url === '!') {
+        appendHyperlink(textCompWrapper, label, url, customCallbackTable[label]);
+      } else {
+        appendHyperlink(textCompWrapper, label, url);
+      }
     }
 
     const remainingTxt: string = text.substr(indexPointer, text.length);
@@ -94,9 +101,12 @@ function TextWithLink({
     textComp: Wrapper<JSX.Element>,
     textToAppend: string,
     url: string,
+    customCb?: () => void
   ): void => {
+    const cb = customCb ? () => customCb() : () => onPressHandler(url);
+
     textComp.content = (
-      <Text style={linkStyle} selectable onPress={() => onPressHandler(url)}>
+      <Text style={linkStyle} selectable onPress={cb}>
         {textComp.content}
         {textToAppend}
       </Text>
