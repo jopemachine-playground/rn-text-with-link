@@ -73,6 +73,8 @@ function TextWithLink({
     setTextComponent(textCompWrapper.content);
   }, []);
 
+  const noop = () => {};
+
   const onPressHandler = (
     label: string,
     url: string,
@@ -92,7 +94,7 @@ function TextWithLink({
     textToAppend: string
   ): void => {
     textComp.content = (
-      <Text style={style} selectable>
+      <Text style={style} selectable onPress={noop}>
         {textComp.content}
         {textToAppend}
       </Text>
