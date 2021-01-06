@@ -1,6 +1,6 @@
 {
   "name": "rn-text-with-link",
-  "version": "0.0.9",
+  "version": "0.1.0",
   "description": "Create simple text component with hyperlink in React Native",
   "main": "index.js",
   "scripts": {
